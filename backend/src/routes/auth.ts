@@ -11,10 +11,18 @@ router.post("/register", async (req, res) => {
     return res.status(400).json({ error: "Email and password are required" });
   }
 
-  const hash = await bcrypt.hash(password, 10);
-  const user = await User.create({ email, password: hash });
+    const hash = await bcrypt.hash(password, 10);
 
-  res.status(201).json({ id: user._id, email: user.email });
+  try {
+    const user = await User.create({ email, password: hash });
+    return res.status(201).json({ id: user._id, email: user.email });
+  } catch (error: any) {
+    if (error.code === 11000) {
+      return res.status(409).json({ error: "Email already registered" });
+    }
+    throw error;
+  }
+  
 });
 
 export default router;

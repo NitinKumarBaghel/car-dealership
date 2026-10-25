@@ -25,3 +25,16 @@ it("registers a new user and returns 201", async () => {
   expect(res.body.email).toBe("a@a.com");
   expect(res.body.password).toBeUndefined();
 });
+
+it("returns 409 when the email is already registered", async () => {
+  await request(app)
+    .post("/api/auth/register")
+    .send({ email: "a@a.com", password: "secret123" });
+
+  const res = await request(app)
+    .post("/api/auth/register")
+    .send({ email: "a@a.com", password: "secret123" });
+
+  expect(res.status).toBe(409);
+  expect(res.body.error).toBe("Email already registered");
+});

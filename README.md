@@ -57,7 +57,7 @@ Tests use a separate database, `car_dealership_test`.
 ## Test report
 14 tests passed across 2 test suites.
 
-![Test report](screenshots/test.png)
+![Test report](screenshots/tests.png)
 
 ## Known limitations
 - For demo purposes, anyone can register as admin using a checkbox. A real app
